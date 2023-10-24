@@ -1,10 +1,18 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import './App.css';
 import Sidebar from "./Sidebar";
 import Chat from "./Chat";
 import Pusher from "pusher-js";
+import axios from "./axios";
 
 function App() {
+  const [messages, setMessages] = useState([]);
+
+  useEffect(() => {
+    axios.get('/messages/sync').then((response) => {
+        setMessages(response.data);
+      });
+  }, []);
 
   useEffect(() => {
     const pusher = new Pusher('e0240fc6d04ca0fa9821', {
@@ -16,6 +24,8 @@ function App() {
       alert(JSON.stringify(data));
     });
   }, [])
+
+  console.log(messages);
 
   return (
     <div className="app">
