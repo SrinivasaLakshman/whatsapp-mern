@@ -4,7 +4,7 @@ import { Avatar, IconButton } from '@mui/material';
 import { AttachFile, InsertEmoticon, MoreVert, SearchOutlined, Mic } from '@mui/icons-material';
 import { useState } from 'react';
 
-function Chat() {
+function Chat({ messages }) {
 
   const {input, setInput} = useState("");
 
@@ -36,12 +36,15 @@ function Chat() {
       </div>
 
       <div className='chat_body'>
-        <p className='chat_message'>
-          <span className='chat_name'>Srinivas</span>
-          This is a message
-          <span className='chat_timestamp'>{new
-          Date().toUTCString()}</span>
+        {messages.map((message) => (
+          <p 
+            className={`chat_message ${message.received && 'chat_reciever'}`}
+          >
+            <span className='chat_name'>{message.name}</span>
+            {message.message}
+            <span className='chat_timestamp'>{message.timestamp}</span>
         </p>
+        ))}
 
         <p className='chat_message chat_reciever'>
           <span className='chat_name'>Srinivas</span>
